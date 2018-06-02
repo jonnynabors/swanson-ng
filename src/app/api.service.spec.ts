@@ -13,4 +13,9 @@ describe('ApiService', () => {
     apiService.getSingleQuote();
     verify(mockHttpClient.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')).called();
   });
+
+  it('should get request 3 quotes from the swanson api', () => {
+    apiService.getNumberOfQuotes(3);
+    verify(mockHttpClient.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes/3')).called();
+  });
 });

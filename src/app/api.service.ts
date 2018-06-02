@@ -9,4 +9,8 @@ export class ApiService {
   public getSingleQuote() {
     return this.http.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes');
   }
+
+  public getNumberOfQuotes(quotesToGet: number) {
+    return this.http.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes/' + quotesToGet);
+  }
 }
