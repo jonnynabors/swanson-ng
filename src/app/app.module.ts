@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { SingleQuoteComponent } from './single-quote/single-quote.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SingleQuoteComponent
   ],
   imports: [
     BrowserModule,
