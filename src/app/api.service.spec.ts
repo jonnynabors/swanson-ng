@@ -1,21 +1,38 @@
-import { HttpClient } from '@angular/common/http';
-import { TestBed, inject } from '@angular/core/testing';
 
+import { TestBed, getTestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
-import { mock, instance, verify } from 'ts-mockito';
 
 describe('ApiService', () => {
-  const mockHttpClient: HttpClient = mock(HttpClient);
-  const apiService: ApiService = new ApiService(instance(mockHttpClient));
-  beforeEach(() => {});
+  let injector: TestBed;
+  let service: ApiService;
+  let httpMock: HttpTestingController;
 
-  it('should call the swanson api for a single quote', () => {
-    apiService.getSingleQuote();
-    verify(mockHttpClient.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')).called();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ApiService]
+    });
+    injector = getTestBed();
+    service = injector.get(ApiService);
+    httpMock = injector.get(HttpTestingController);
   });
 
-  it('should get request 3 quotes from the swanson api', () => {
-    apiService.getNumberOfQuotes(3);
-    verify(mockHttpClient.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes/3')).called();
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  it('should return an Observable<String[]>', () => {
+    const expectedResult = ['Keep your tears in your eyes where they belong.'];
+
+    service.getSingleQuote().subscribe(actualResult => {
+      expect(actualResult).toBe(expectedResult);
+    });
+
+    const actualRequest = httpMock.expectOne(
+      'http://ron-swanson-quotes.herokuapp.com/v2/quotes'
+    );
+    expect(actualRequest.request.method).toBe('GET');
+    actualRequest.flush(expectedResult);
   });
 });

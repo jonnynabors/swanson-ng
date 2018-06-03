@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
@@ -6,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  public getSingleQuote() {
-    return this.http.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes');
+  public getSingleQuote(): Observable<string[]> {
+    return this.http.get<string[]>('http://ron-swanson-quotes.herokuapp.com/v2/quotes');
   }
 
-  public getNumberOfQuotes(quotesToGet: number) {
-    return this.http.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes/' + quotesToGet);
+  public getNumberOfQuotes(quotesToGet: number): Observable<string[]> {
+    return this.http.get<string[]>('http://ron-swanson-quotes.herokuapp.com/v2/quotes/' + quotesToGet);
   }
 }
