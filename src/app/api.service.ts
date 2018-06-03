@@ -10,8 +10,4 @@ export class ApiService {
   public getSingleQuote(): Observable<string[]> {
     return this.http.get<string[]>('http://ron-swanson-quotes.herokuapp.com/v2/quotes');
   }
-
-  public getNumberOfQuotes(quotesToGet: number): Observable<string[]> {
-    return this.http.get<string[]>('http://ron-swanson-quotes.herokuapp.com/v2/quotes/' + quotesToGet);
-  }
 }
